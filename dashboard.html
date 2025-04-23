@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #512da8, #c40707);
+            margin: 0;
+        }
+        .dashboard {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+            text-align: center;
+        }
+        h1 {
+            color: #512da8;
+        }
+        p {
+            color: #333;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .welcome-name {
+            font-weight: 600;
+            color: #512da8;
+            text-transform: uppercase;
+        }
+        button {
+            background-color: #512da8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <h1>¡Bienvenido al Dashboard!</h1>
+        <p>Has iniciado sesión correctamente.</p>
+        <p class="welcome-name" id="welcome-message"></p>
+        <button onclick="window.location.href='index.html'">Cerrar Sesión</button>
+    </div>
+    <script>
+        // Leer el nombre desde sessionStorage
+        const nombre = sessionStorage.getItem('nombre');
+        const welcomeMessage = document.getElementById('welcome-message');
+        if (nombre) {
+            welcomeMessage.textContent = `BIENVENIDO, ${nombre}`;
+        } else {
+            welcomeMessage.textContent = 'BIENVENIDO, USUARIO';
+        }
+    </script>
+</body>
+</html>

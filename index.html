@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+         <link rel="stylesheet" href="style.css">
+         <link rel="icon" href="pfp.jpg">
+         <title>Login PHP | Victor</title>
+     </head>
+     <body>
+         <div class="container" id="container">
+             <div class="form-container sign-up">
+                 <form id="signup-form" action="registro.php" method="POST">
+                     <h1>Crear Cuenta</h1>
+                     <div class="social-icons">
+                         <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                         <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                         <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                         <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                     </div>
+                     <span>Ingresa tu nombre, correo y contraseña</span>
+                     <div id="signup-message" style="display: none; margin: 10px 0;"></div>
+                     <input type="text" name="nombre" placeholder="Nombre" required>
+                     <input type="email" name="correo" placeholder="Correo" required>
+                     <input type="password" name="contrasena" placeholder="Contraseña" required>
+                     <button type="submit">Registrarse</button>
+                 </form>
+             </div>
+             <div class="form-container sign-in">
+                 <form id="signin-form" action="login.php" method="POST">
+                     <h1>Iniciar Sesión</h1>
+                     <div class="social-icons">
+                         <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                         <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                         <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                         <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                     </div>
+                     <span>Ingresa tu correo y contraseña</span>
+                     <div id="signin-message" style="display: none; margin: 10px 0;"></div>
+                     <br>
+                     <input type="email" name="correo" placeholder="Ingrese su correo" required>
+                     <input type="password" name="contrasena" placeholder="Ingrese su consumesña" required>
+                     <button type="submit">Iniciar Sesión</button>
+                 </form>
+             </div>
+             <div class="toggle-container">
+                 <div class="toggle">
+                     <div class="toggle-panel toggle-left">
+                         <h1>¡Bienvenido de vuelta!</h1>
+                         <p>Ingresa tus datos para usar todas las funciones del sitio</p>
+                         <button class="hidden" id="login">Iniciar Sesión</button>
+                     </div>
+                     <div class="toggle-panel toggle-right">
+                         <h1>¡Hola, amigo!</h1>
+                         <p>Regístrate con tus datos para usar todas las funciones del sitio</p>
+                         <button class="hidden" id="register">Registrarse</button>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <script src="script.js"></script>
+         <script>
+             // Manejar formulario de registro
+             document.getElementById('signup-form').addEventListener('submit', function(e) {
+                 e.preventDefault();
+                 const formData = new FormData(this);
+                 const messageDiv = document.getElementById('signup-message');
+                 fetch('http://localhost/Modern-Login-master/registro.php', {
+                     method: 'POST',
+                     body: formData
+                 })
+                 .then(response => {
+                     if (!response.ok) {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                     }
+                     return response.json();
+                 })
+                 .then(data => {
+                     messageDiv.style.display = 'block';
+                     messageDiv.style.color = data.success ? 'green' : 'red';
+                     messageDiv.textContent = data.message;
+                     if (data.success) {
+                         setTimeout(() => {
+                             document.getElementById('container').classList.remove('active');
+                         }, 1000);
+                     }
+                 })
+                 .catch(error => {
+                     console.error('Error detallado:', error);
+                     messageDiv.style.display = 'block';
+                     messageDiv.style.color = 'red';
+                     messageDiv.textContent = 'Error en la solicitud: ' + error.message;
+                 });
+             });
+
+             // Manejar formulario de login
+             document.getElementById('signin-form').addEventListener('submit', function(e) {
+                 e.preventDefault();
+                 const formData = new FormData(this);
+                 const messageDiv = document.getElementById('signin-message');
+                 fetch('http://localhost/Modern-Login-master/login.php', {
+                     method: 'POST',
+                     body: formData
+                 })
+                 .then(response => {
+                     if (!response.ok) {
+                         throw new Error(`HTTP error! status: ${response.status}`);
+                     }
+                     return response.json();
+                 })
+                 .then(data => {
+                     messageDiv.style.display = 'block';
+                     messageDiv.style.color = data.success ? 'green' : 'red';
+                     messageDiv.textContent = data.message;
+                     if (data.success) {
+                         sessionStorage.setItem('nombre', data.nombre);
+                         setTimeout(() => {
+                             window.location.href = 'dashboard.html';
+                         }, 1000);
+                     }
+                 })
+                 .catch(error => {
+                     console.error('Error detallado:', error);
+                     messageDiv.style.display = 'block';
+                     messageDiv.style.color = 'red';
+                     messageDiv.textContent = 'Error en la solicitud: ' + error.message;
+                 });
+             });
+         </script>
+     </body>
+     </html>
