@@ -2,7 +2,7 @@
      header('Content-Type: application/json');
      header('Access-Control-Allow-Origin: *'); // Agregado para pruebas
      session_start();
-     require_once 'conexion.php';
+     require_once 'Conexion.php';
 
      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $correo = trim($_POST['correo'] ?? '');

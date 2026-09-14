@@ -1,7 +1,7 @@
 <?php
      header('Content-Type: application/json');
      header('Access-Control-Allow-Origin: *'); // Agregado para pruebas
-     require_once 'conexion.php';
+     require_once 'Conexion.php';
 
      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
          $nombre = trim($_POST['nombre'] ?? '');
